@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaSaaS – Modern Cloud Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #2563eb;
+    --purple: #7c3aed;
+    --purple-light: #8b5cf6;
+    --bg-lavender: #eeeaf8;
+    --bg-dark: #1e1b4b;
+    --white: #ffffff;
+    --text-dark: #1e1b4b;
+    --text-muted: #6b7280;
+    --card-bg: #ffffff;
+    --toggle-on: #7c3aed;
+    --toggle-off: #d1d5db;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-lavender);
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+
+  /* ── PAGE SYSTEM ── */
+  .page { display: none; min-height: 100vh; flex-direction: column; }
+  .page.active { display: flex; }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--blue);
+    padding: 0 32px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    font-weight: 700;
+    font-size: 17px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .nav-logo svg { width: 22px; height: 22px; }
+  .nav-center {
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .nav-link {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+    text-decoration: none;
+  }
+  .nav-link:hover, .nav-link.active { border-bottom-color: white; }
+  .btn-login {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    border-radius: 999px;
+    padding: 6px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-login:hover { background: white; color: var(--blue); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg-dark);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .footer-links { display: flex; gap: 32px; }
+  .footer-link {
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-link:hover { color: white; }
+  .footer-copy { color: rgba(255,255,255,0.5); font-size: 12px; }
+
+  /* ── MAIN CONTENT AREA ── */
+  .page-body {
+    flex: 1;
+    background: var(--bg-lavender);
+    padding: 40px 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .page-body.centered { align-items: center; }
+
+  /* ── WHITE CARD ── */
+  .card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.07);
+    width: 100%;
+    max-width: 680px;
+  }
+
+  /* ── PURPLE BUTTON ── */
+  .btn-purple {
+    background: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-purple:hover { background: #6d28d9; transform: translateY(-1px); }
+  .btn-purple:active { transform: translateY(0); }
+
+  /* ══════════════════════════════
+     PAGE 1 – HOME
+  ══════════════════════════════ */
+  #page-home .page-body {
+    padding: 0;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Hero section */
+  .home-hero {
+    background: var(--bg-lavender);
+    padding: 32px 40px;
+    display: flex;
+    justify-content: center;
+  }
+  .home-hero-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    max-width: 900px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+  }
+  .hero-image {
+    width: 340px;
+    min-height: 280px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #b2f5c8 0%, #a8edcc 20%, #6ee7b7 40%, #34d399 60%, #10b981 80%);
+    position: relative;
+    overflow: hidden;
+  }
+  /* Abstract art background */
+  .hero-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(0,0,0,0.08) 8px, rgba(0,0,0,0.08) 9px),
+      linear-gradient(120deg, #a7f3d0 0%, #6ee7b7 30%, #34d399 60%, #059669 100%);
+  }
+  .hero-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(255,255,255,0.35) 0%, transparent 60%),
+      linear-gradient(200deg, rgba(0,80,40,0.3) 0%, transparent 60%);
+  }
+  /* Diagonal lines overlay */
+  .hero-img-lines {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .hero-img-lines svg { width: 100%; height: 100%; }
+
+  .hero-right {
+    flex: 1;
+    padding: 28px 32px;
+  }
+  .hero-right h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+  }
+  .hero-right p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--text-dark);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  /* Toggle rows */
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 14px;
+    background: #f5f3ff;
+    border-radius: 10px;
+    margin-bottom: 6px;
+  }
+  .toggle-row span { font-size: 13px; font-weight: 500; color: var(--text-dark); }
+  .toggle {
+    width: 42px;
+    height: 24px;
+    border-radius: 999px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: none;
+    padding: 0;
+    flex-shrink: 0;
+  }
+  .toggle.on { background: var(--toggle-on); }
+  .toggle.off { background: var(--toggle-off); }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: white;
+    transition: left 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .toggle.on::after { left: 21px; }
+  .toggle.off::after { left: 3px; }
+
+  /* Features checkboxes */
+  .features-section { margin-top: 20px; }
+  .check-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+  }
+  .check-row span { font-size: 13px; color: var(--text-dark); }
+  .custom-checkbox {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #d1d5db;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: white;
+  }
+  .custom-checkbox.checked {
+    background: var(--purple);
+    border-color: var(--purple);
+  }
+  .custom-checkbox.checked::after {
+    content: '';
+    width: 5px;
+    height: 8px;
+    border: 2px solid white;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg) translateY(-1px);
+  }
+
+  /* Built for section */
+  .built-section {
+    background: #e8e4f5;
+    padding: 56px 40px;
+    text-align: center;
+  }
+  .built-section h2 {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 16px;
+  }
+  .built-section h2 span { color: var(--purple); }
+  .built-section > p {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+  .feature-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .feature-card {
+    background: white;
+    border-radius: 16px;
+    padding: 28px 24px;
+    flex: 1;
+    min-width: 220px;
+    max-width: 260px;
+    text-align: left;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .feature-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  .feature-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+  }
+  .feature-card p {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  /* Search section */
+  .search-section {
+    background: var(--bg-lavender);
+    padding: 48px 40px;
+    display: flex;
+    justify-content: center;
+  }
+  .search-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+  .search-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+  }
+  .search-card > p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .search-input-wrap {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .search-input-wrap svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    width: 16px;
+    height: 16px;
+  }
+  .search-input {
+    width: 100%;
+    padding: 12px 16px 12px 40px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+    background: #f9f8ff;
+  }
+  .search-input:focus { border-color: var(--purple); }
+  .radio-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+  .radio-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-dark);
+  }
+  .radio-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #d1d5db;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s;
+  }
+  .radio-dot.selected { border-color: var(--purple); }
+  .radio-dot.selected::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--purple);
+  }
+
+  /* ══════════════════════════════
+     PAGE 2 – PRODUCTS
+  ══════════════════════════════ */
+  .page-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 24px;
+  }
+  .card-title {
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .card p {
+    font-size: 14.5px;
+    color: #4b5563;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  /* ══════════════════════════════
+     PAGE 3 – FEATURE DETAILS
+  ══════════════════════════════ */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .feature-item {
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-dark);
+  }
+  .feature-item svg { color: var(--purple); flex-shrink: 0; }
+
+  /* ══════════════════════════════
+     PAGE 4 – SOLUTIONS
+  ══════════════════════════════ */
+  .solution-tiers {
+    display: flex;
+    gap: 14px;
+    margin: 24px 0;
+    flex-wrap: wrap;
+  }
+  .tier-card {
+    flex: 1;
+    min-width: 140px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    background: #faf9ff;
+  }
+  .tier-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 6px;
+  }
+  .tier-card p { font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.4; }
+
+  /* ══════════════════════════════
+     PAGE 5 – LOGIN
+  ══════════════════════════════ */
+  #page-login .page-body {
+    background: linear-gradient(160deg, #e8e4f5 0%, #ddd8f2 100%);
+    align-items: center;
+    justify-content: center;
+  }
+  .login-card {
+    background: white;
+    border-radius: 20px;
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  .login-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    color: var(--text-dark);
+  }
+  .login-logo svg { color: var(--purple); }
+  .login-logo span { font-size: 20px; font-weight: 800; }
+  .login-card h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+  }
+  .login-card > p {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+  }
+  .form-group { text-align: left; margin-bottom: 18px; }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+  }
+  .input-wrap {
+    position: relative;
+  }
+  .input-wrap svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: #9ca3af;
+  }
+  .form-input {
+    width: 100%;
+    padding: 13px 16px 13px 42px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.2s;
+    background: #f9f8ff;
+  }
+  .form-input::placeholder { color: #9ca3af; }
+  .form-input:focus { border-color: var(--purple); }
+  .btn-signin {
+    width: 100%;
+    background: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    margin-top: 8px;
+    transition: background 0.2s;
+  }
+  .btn-signin:hover { background: #6d28d9; }
+
+  /* Error message */
+  .error-msg {
+    display: none;
+    background: #fef2f2;
+    border: 1.5px solid #fca5a5;
+    color: #dc2626;
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    text-align: left;
+    align-items: center;
+    gap: 8px;
+  }
+  .error-msg.show { display: flex; }
+
+  /* ══════════════════════════════
+     PAGE 6 – SIGN OUT (post-login)
+  ══════════════════════════════ */
+  #page-signout .page-body {
+    background: linear-gradient(160deg, #e8e4f5 0%, #ddd8f2 100%);
+    align-items: center;
+    justify-content: center;
+  }
+  .signout-card {
+    background: white;
+    border-radius: 20px;
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  .signout-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    color: var(--text-dark);
+  }
+  .signout-logo svg { color: var(--purple); }
+  .signout-logo span { font-size: 20px; font-weight: 800; }
+  .signout-card h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+  }
+  .signout-card > p {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--purple);
+    margin-bottom: 28px;
+  }
+  .btn-signout {
+    width: 100%;
+    background: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+  }
+  .btn-signout:hover { background: #6d28d9; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ PAGE: HOME ═══════════════════════════ -->
+<div id="page-home" class="page active">
+  <nav>
+    <a class="nav-logo" onclick="goTo('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      NovaSaaS
+    </a>
+    <span class="nav-center">Modern Cloud Platform</span>
+    <div class="nav-right">
+      <a class="nav-link active" onclick="goTo('products')">Products</a>
+      <a class="nav-link" onclick="goTo('solutions')">Solutions</a>
+      <button class="btn-login" onclick="goTo('login')">Login</button>
+    </div>
+  </nav>
+
+  <div class="page-body" style="padding:0; flex-direction:column; align-items:stretch;">
+    <!-- Hero card -->
+    <div class="home-hero">
+      <div class="home-hero-card">
+        <!-- Abstract art image left -->
+        <div class="hero-image">
+          <div class="hero-img-lines">
+            <svg viewBox="0 0 340 280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+              <!-- Green gradient base -->
+              <defs>
+                <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#b2f5c8;stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:#34d399;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="g2" x1="100%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#6ee7b7;stop-opacity:0.7" />
+                  <stop offset="100%" style="stop-color:#a7f3d0;stop-opacity:0.3" />
+                </linearGradient>
+              </defs>
+              <rect width="340" height="280" fill="url(#g1)"/>
+              <!-- Abstract diagonal lines like the original -->
+              <line x1="0" y1="280" x2="200" y2="0" stroke="rgba(0,0,0,0.35)" stroke-width="3"/>
+              <line x1="30" y1="280" x2="230" y2="0" stroke="rgba(0,0,0,0.25)" stroke-width="2"/>
+              <line x1="60" y1="280" x2="260" y2="0" stroke="rgba(0,0,0,0.2)" stroke-width="2"/>
+              <line x1="-20" y1="280" x2="180" y2="0" stroke="rgba(0,0,0,0.3)" stroke-width="4"/>
+              <line x1="80" y1="280" x2="340" y2="60" stroke="rgba(0,0,0,0.2)" stroke-width="2"/>
+              <line x1="100" y1="280" x2="340" y2="30" stroke="rgba(0,0,0,0.15)" stroke-width="1.5"/>
+              <!-- Cross diagonals -->
+              <line x1="0" y1="0" x2="200" y2="280" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+              <line x1="40" y1="0" x2="240" y2="280" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+              <line x1="80" y1="0" x2="280" y2="280" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+              <!-- Light overlay polygon -->
+              <polygon points="0,0 200,0 0,180" fill="rgba(255,255,255,0.15)"/>
+              <!-- Dark accent shapes -->
+              <polygon points="100,280 260,280 340,100 200,0 80,0" fill="rgba(0,50,30,0.18)"/>
+              <!-- Highlights -->
+              <ellipse cx="80" cy="100" rx="60" ry="40" fill="rgba(255,255,255,0.18)"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Right side settings -->
+        <div class="hero-right">
+          <h2>Customize Your Experience</h2>
+          <p>Configure your preferences to get the most out of our platform.</p>
+
+          <div class="section-label">Quick Settings</div>
+          <div class="toggle-row">
+            <span>Amit Nkhade</span>
+            <button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+          </div>
+          <div class="toggle-row">
+            <span>Agam Singh</span>
+            <button class="toggle off" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+          </div>
+          <div class="toggle-row">
+            <span>Sattva</span>
+            <button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+          </div>
+
+          <div class="features-section">
+            <div class="section-label">Features</div>
+            <div class="check-row">
+              <div class="custom-checkbox checked" onclick="this.classList.toggle('checked')"></div>
+              <span>Enable real-time analytics</span>
+            </div>
+            <div class="check-row">
+              <div class="custom-checkbox" onclick="this.classList.toggle('checked')"></div>
+              <span>Automated daily reports</span>
+            </div>
+            <div class="check-row">
+              <div class="custom-checkbox checked" onclick="this.classList.toggle('checked')"></div>
+              <span>Push notifications</span>
+            </div>
+            <div class="check-row">
+              <div class="custom-checkbox" onclick="this.classList.toggle('checked')"></div>
+              <span>Two-factor authentication</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Built for the Modern Team -->
+    <div class="built-section">
+      <h2>Built for the <span>Modern Team</span></h2>
+      <p>NovaSaaS empowers teams to work smarter, not harder. Our cloud platform brings together analytics, automation, and collaboration in one seamless experience. Say goodbye to scattered tools and hello to unified productivity.</p>
+      <div class="feature-cards">
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Real-Time Analytics</h3>
+          <p>Monitor your key metrics with live dashboards that update in real-time. Make data-driven decisions faster.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Smart Automation</h3>
+          <p>Automate repetitive workflows and let AI handle the mundane tasks. Focus on what matters most.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤝</div>
+          <h3>Team Collaboration</h3>
+          <p>Built-in messaging, file sharing, and project boards keep your entire team aligned and productive.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search section -->
+    <div class="search-section">
+      <div class="search-card">
+        <h3>Find What You Need</h3>
+        <p>Search our knowledge base, documentation, and resources.</p>
+        <div class="search-input-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input class="search-input" type="text" placeholder="Search documentation, guides, tutorials...">
+        </div>
+        <div class="radio-group">
+          <label class="radio-item">
+            <div class="radio-dot selected" id="r1" onclick="selectRadio('r1')"></div>
+            All Resources
+          </label>
+          <label class="radio-item">
+            <div class="radio-dot" id="r2" onclick="selectRadio('r2')"></div>
+            Documentation
+          </label>
+          <label class="radio-item">
+            <div class="radio-dot" id="r3" onclick="selectRadio('r3')"></div>
+            Tutorials
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo" onclick="goTo('home')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      NovaSaaS
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" onclick="goTo('products')">Products</a>
+      <a class="footer-link" onclick="goTo('solutions')">Solutions</a>
+    </div>
+    <span class="footer-copy">© 2026 NovaSaaS. All rights reserved.</span>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════ PAGE: PRODUCTS ═══════════════════════════ -->
+<div id="page-products" class="page">
+  <nav>
+    <a class="nav-logo" onclick="goTo('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      NovaSaaS
+    </a>
+    <span class="nav-center">Modern Cloud Platform</span>
+    <div class="nav-right">
+      <a class="nav-link active" onclick="goTo('products')">Products</a>
+      <a class="nav-link" onclick="goTo('solutions')">Solutions</a>
+      <button class="btn-login" onclick="goTo('login')">Login</button>
+    </div>
+  </nav>
+
+  <div class="page-body centered">
+    <div class="card">
+      <div class="card-title">
+        <div class="page-icon">📦</div>
+        Our Products
+      </div>
+      <p>NovaSaaS offers a comprehensive suite of cloud-based tools designed to streamline your business operations. From intelligent analytics dashboards to automated workflow engines, our products are built to scale with your team.</p>
+      <p>Whether you're a startup finding your footing or an enterprise managing thousands of users, our modular architecture ensures you only pay for what you need. Explore the next page for detailed feature breakdowns and integration guides.</p>
+      <button class="btn-purple" onclick="goTo('features')">
+        Open Next Page
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo" onclick="goTo('home')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      NovaSaaS
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" onclick="goTo('products')">Products</a>
+      <a class="footer-link" onclick="goTo('solutions')">Solutions</a>
+    </div>
+    <span class="footer-copy">© 2026 NovaSaaS. All rights reserved.</span>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════ PAGE: FEATURE DETAILS ═══════════════════════════ -->
+<div id="page-features" class="page">
+  <nav>
+    <a class="nav-logo" onclick="goTo('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      NovaSaaS
+    </a>
+    <span class="nav-center">Modern Cloud Platform</span>
+    <div class="nav-right">
+      <a class="nav-link active" onclick="goTo('products')">Products</a>
+      <a class="nav-link" onclick="goTo('solutions')">Solutions</a>
+      <button class="btn-login" onclick="goTo('login')">Login</button>
+    </div>
+  </nav>
+
+  <div class="page-body centered">
+    <div class="card">
+      <div class="card-title">
+        <div class="page-icon" style="background:#7c3aed;">✅</div>
+        Feature Details
+      </div>
+      <p>Each NovaSaaS product includes enterprise-grade security, 99.99% uptime SLA, and dedicated support. Our analytics engine processes over 10 million events per second with sub-millisecond latency.</p>
+
+      <div class="feature-grid">
+        <div class="feature-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Real-time data sync
+        </div>
+        <div class="feature-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Custom dashboards
+        </div>
+        <div class="feature-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          API-first architecture
+        </div>
+        <div class="feature-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Role-based access
+        </div>
+        <div class="feature-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Audit logging
+        </div>
+        <div class="feature-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Webhook integrations
+        </div>
+      </div>
+
+      <button class="btn-purple" onclick="goTo('home')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Back to Home
+      </button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo" onclick="goTo('home')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      NovaSaaS
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" onclick="goTo('products')">Products</a>
+      <a class="footer-link" onclick="goTo('solutions')">Solutions</a>
+    </div>
+    <span class="footer-copy">© 2026 NovaSaaS. All rights reserved.</span>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════ PAGE: SOLUTIONS ═══════════════════════════ -->
+<div id="page-solutions" class="page">
+  <nav>
+    <a class="nav-logo" onclick="goTo('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      NovaSaaS
+    </a>
+    <span class="nav-center">Modern Cloud Platform</span>
+    <div class="nav-right">
+      <a class="nav-link" onclick="goTo('products')">Products</a>
+      <a class="nav-link active" onclick="goTo('solutions')">Solutions</a>
+      <button class="btn-login" onclick="goTo('login')">Login</button>
+    </div>
+  </nav>
+
+  <div class="page-body centered">
+    <div class="card">
+      <div class="card-title">
+        <div class="page-icon" style="background:#7c3aed;">🌐</div>
+        Solutions
+      </div>
+      <p>Our solutions are tailored for industries ranging from fintech and healthcare to e-commerce and education. NovaSaaS provides pre-built templates and integrations so you can get up and running in minutes, not months.</p>
+      <p>Every solution comes with a dedicated onboarding specialist, custom training resources, and a community of thousands of power users ready to share best practices and workflow ideas.</p>
+
+      <div class="solution-tiers">
+        <div class="tier-card">
+          <h4>Startup</h4>
+          <p>Perfect for teams under 20</p>
+        </div>
+        <div class="tier-card">
+          <h4>Business</h4>
+          <p>Designed for growing teams</p>
+        </div>
+        <div class="tier-card">
+          <h4>Enterprise</h4>
+          <p>Full-scale deployment</p>
+        </div>
+      </div>
+
+      <button class="btn-purple" onclick="goTo('home')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Back to Home
+      </button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo" onclick="goTo('home')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      NovaSaaS
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" onclick="goTo('products')">Products</a>
+      <a class="footer-link" onclick="goTo('solutions')">Solutions</a>
+    </div>
+    <span class="footer-copy">© 2026 NovaSaaS. All rights reserved.</span>
+  </footer>
+</div>
+
+
+<!-- PAGE: LOGIN -->
+<div id="page-login" class="page">
+  <nav>
+    <a class="nav-logo" onclick="goTo('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      NovaSaaS
+    </a>
+    <span class="nav-center">Modern Cloud Platform</span>
+    <div class="nav-right">
+      <a class="nav-link" onclick="goTo('products')">Products</a>
+      <a class="nav-link" onclick="goTo('solutions')">Solutions</a>
+      <button class="btn-login" onclick="goTo('login')">Login</button>
+    </div>
+  </nav>
+  <div class="page-body centered">
+    <div class="login-card">
+      <div class="login-logo">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span>NovaSaaS</span>
+      </div>
+      <h2>Welcome back</h2>
+      <p>Sign in to your account to continue</p>
+      <div class="error-msg" id="login-error">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Invalid credentials. Please try again.
+      </div>
+      <div class="form-group">
+        <label>Email address</label>
+        <div class="input-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <input id="login-email" class="form-input" type="email" placeholder="you@example.com" oninput="clearLoginError()">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input id="login-password" class="form-input" type="password" placeholder="Enter your password" oninput="clearLoginError()" onkeydown="if(event.key==='Enter')handleLogin()">
+        </div>
+      </div>
+      <button class="btn-signin" onclick="handleLogin()">Sign In</button>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-logo" onclick="goTo('home')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      NovaSaaS
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" onclick="goTo('products')">Products</a>
+      <a class="footer-link" onclick="goTo('solutions')">Solutions</a>
+    </div>
+    <span class="footer-copy">© 2026 NovaSaaS. All rights reserved.</span>
+  </footer>
+</div>
+
+
+<!-- PAGE: SIGN OUT (post-login success) -->
+<div id="page-signout" class="page">
+  <nav>
+    <a class="nav-logo" onclick="goTo('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      NovaSaaS
+    </a>
+    <span class="nav-center">Modern Cloud Platform</span>
+    <div class="nav-right">
+      <a class="nav-link" onclick="goTo('products')">Products</a>
+      <a class="nav-link" onclick="goTo('solutions')">Solutions</a>
+    </div>
+  </nav>
+  <div class="page-body centered">
+    <div class="signout-card">
+      <div class="signout-logo">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span>NovaSaaS</span>
+      </div>
+      <h2>Sign out</h2>
+      <p>Login done successfully</p>
+      <button class="btn-signout" onclick="goTo('home')">Sign Out</button>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-logo" onclick="goTo('home')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      NovaSaaS
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" onclick="goTo('products')">Products</a>
+      <a class="footer-link" onclick="goTo('solutions')">Solutions</a>
+    </div>
+    <span class="footer-copy">© 2026 NovaSaaS. All rights reserved.</span>
+  </footer>
+</div>
+
+
+<script>
+  const pages = ['home','products','features','solutions','login','signout'];
+
+  function goTo(id) {
+    pages.forEach(p => document.getElementById('page-' + p).classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function selectRadio(id) {
+    ['r1','r2','r3'].forEach(r => document.getElementById(r).classList.remove('selected'));
+    document.getElementById(id).classList.add('selected');
+  }
+
+  function handleLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errorEl = document.getElementById('login-error');
+    const emailInput = document.getElementById('login-email');
+    const passInput = document.getElementById('login-password');
+
+    if (email === 'a@gmail.com' && password === 'abc') {
+      // Success – clear form and navigate to sign-out page
+      errorEl.classList.remove('show');
+      emailInput.style.borderColor = '';
+      passInput.style.borderColor = '';
+      emailInput.value = '';
+      passInput.value = '';
+      goTo('signout');
+    } else {
+      // Failure – show error and highlight inputs
+      errorEl.classList.add('show');
+      emailInput.style.borderColor = '#fca5a5';
+      passInput.style.borderColor = '#fca5a5';
+      // Shake the card
+      const card = emailInput.closest('.login-card');
+      card.style.animation = 'none';
+      void card.offsetHeight;
+      card.style.animation = 'shake 0.4s ease';
+    }
+  }
+
+  function clearLoginError() {
+    document.getElementById('login-error').classList.remove('show');
+    document.getElementById('login-email').style.borderColor = '';
+    document.getElementById('login-password').style.borderColor = '';
+  }
+</script>
+
+<style>
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%      { transform: translateX(-8px); }
+    40%      { transform: translateX(8px); }
+    60%      { transform: translateX(-5px); }
+    80%      { transform: translateX(5px); }
+  }
+</style>
+</body>
+</html>
